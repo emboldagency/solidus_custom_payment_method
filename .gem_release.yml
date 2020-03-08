@@ -1,0 +1,5 @@
+bump:
+  recurse: false
+  file: 'lib/solidus_custom_payments/version.rb'
+  message: Bump SolidusCustomPayments to %{version}
+  branch: true
