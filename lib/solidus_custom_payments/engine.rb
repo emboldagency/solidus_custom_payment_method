@@ -19,6 +19,10 @@ module SolidusCustomPayments
       app.config.spree.payment_methods << Spree::PaymentMethod::CustomCashMethod
     end
 
+    initializer "spree.promotion.rules.add_custom_cash_rule_promotion", after: "spree.promo.register.promotion.rules" do |app|
+      app.config.spree.promotions.rules << Spree::Promotion::Rules::CustomCashPaymentMethodRule
+    end
+
     config.to_prepare(&method(:activate).to_proc)
   end
 end

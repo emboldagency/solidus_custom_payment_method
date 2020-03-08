@@ -1,12 +1,12 @@
 Spree::Payment.class_eval do
-  after_create :update_payment_state
+  before_create :update_payment_state
 
   private
 
   def update_payment_state
-    case self.payment_method
+    case self.payment_method.try(:type)
     when "Spree::PaymentMethod::CustomCashMethod"
-      self.update(:state, :pending)
+      self.state = :pending
     end
   end
 end
