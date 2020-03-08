@@ -23,8 +23,8 @@ module Spree
 
           case preferred_match_policy
           when 'all'
-            last_payment = order.payments.last
-            eligibility_errors << "Not custom cash method payment" if last_payment.try(:type) != "Spree::PaymentMethod::CustomCashMethod"
+            last_payment = order.payments.pending.last
+            eligibility_errors << "Not custom cash method payment" if last_payment.try(:payment_method).try(:type) != "Spree::PaymentMethod::CustomCashMethod"
           else
             raise "unexpected match policy: #{preferred_match_policy.inspect}"
           end
