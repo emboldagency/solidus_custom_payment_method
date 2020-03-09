@@ -25,13 +25,18 @@ module Spree
           return if promotion_credit_exists?(order)
 
           amount = compute_amount(order)
-          order.adjustments.create!(
-            amount: amount,
-            order: order,
-            source: self,
-            promotion_code: options[:promotion_code],
-            label: I18n.t('spree.negative_adjustment_labels.order', promotion: "Payment", promotion_name: order.payments.last.try(:payment_method).try(:description))
-          )
+          payment = order.payments.last
+
+          if payment.present? && payment.payment_method.type == "Spree::PaymentMethod::CustomCashMethod"
+            order.adjustments.create!(
+              amount: amount,
+              order: order,
+              source: self,
+              promotion_code: options[:promotion_code],
+              label: I18n.t('spree.negative_adjustment_labels.order', promotion: "Payment", promotion_name: order.payments.last.try(:payment_method).try(:description))
+            )
+          end
+
           true
         end
 
