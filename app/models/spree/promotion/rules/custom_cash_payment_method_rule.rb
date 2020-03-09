@@ -10,10 +10,6 @@ module Spree
         validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES
         preference :match_policy, :string, default: MATCH_POLICIES.first
 
-        def eligible_products
-          products
-        end
-
         def applicable?(promotable)
           promotable.is_a?(Spree::Order)
         end
@@ -23,7 +19,7 @@ module Spree
 
           case preferred_match_policy
           when 'all'
-            last_payment = order.payments.pending.last
+            last_payment = order.payments.last
             eligibility_errors << "Not custom cash method payment" if last_payment.try(:payment_method).try(:type) != "Spree::PaymentMethod::CustomCashMethod"
           else
             raise "unexpected match policy: #{preferred_match_policy.inspect}"
@@ -35,14 +31,6 @@ module Spree
         def actionable?(line_item)
           # ONLY WHOLE ORDER ADJUSTMENT
           return false
-        end
-
-        def product_ids_string
-          product_ids.join(',')
-        end
-
-        def product_ids_string=(product_ids)
-          self.product_ids = product_ids.to_s.split(',').map(&:strip)
         end
       end
     end

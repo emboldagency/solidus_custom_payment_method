@@ -3,3 +3,6 @@
 
 en:
   hello: Hello world
+  spree:
+    negative_adjustment_labels:
+      order: "%{promotion} (%{promotion_name})"

@@ -10,7 +10,7 @@ module SolidusCustomPayments
     end
 
     def self.activate
-      Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*.rb')) do |c|
+      Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
     end
@@ -21,6 +21,10 @@ module SolidusCustomPayments
 
     initializer "spree.promotion.rules.add_custom_cash_rule_promotion", after: "spree.promo.register.promotion.rules" do |app|
       app.config.spree.promotions.rules << Spree::Promotion::Rules::CustomCashPaymentMethodRule
+    end
+
+    initializer "spree.promotion.rules.add_custom_cash_promotion_actions", after: "spree.promo.register.promotions.actions" do |app|
+      app.config.spree.promotions.actions << Spree::Promotion::Actions::CreateNegativeAdjustment
     end
 
     config.to_prepare(&method(:activate).to_proc)
