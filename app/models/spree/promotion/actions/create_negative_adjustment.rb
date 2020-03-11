@@ -35,6 +35,14 @@ module Spree
               promotion_code: options[:promotion_code],
               label: I18n.t('spree.negative_adjustment_labels.order', promotion: "Payment", promotion_name: order.payments.last.try(:payment_method).try(:description))
             )
+          else
+            order.adjustments.create!(
+              amount: amount,
+              order: order,
+              source: self,
+              promotion_code: options[:promotion_code],
+              label: I18n.t('spree.negative_adjustment_labels.order', promotion: "Charge", promotion_name: promotion.name)
+            )
           end
 
           true

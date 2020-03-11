@@ -9,9 +9,9 @@ en:
     product_rule:
       choose_custom_cash_payment: Choose custom cash payment method
       match_custom_cash_method:  "%{payment_method_name}"
-  active_record:
+  activerecord:
     attributes:
       spree/promotion/actions/create_negative_adjustment:
-        description: Creates a promotion negative credit adjustment on the order
+        description: Creates a promotion negative credit adjustment on the order(ALWAYS ELIGIBLE IF RULE MATCHED!)
     models:
-      spree/promotion/actions/create_negative_adjustment: Creates a promotion negative credit adjustment on the order
+      spree/promotion/actions/create_negative_adjustment: Create whole-order negative adjustment.
