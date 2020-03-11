@@ -6,3 +6,12 @@ en:
   spree:
     negative_adjustment_labels:
       order: "%{promotion} (%{promotion_name})"
+    product_rule:
+      choose_custom_cash_payment: Choose custom cash payment method
+      match_custom_cash_method:  "%{payment_method_name}"
+  active_record:
+    attributes:
+      spree/promotion/actions/create_negative_adjustment:
+        description: Creates a promotion negative credit adjustment on the order
+    models:
+      spree/promotion/actions/create_negative_adjustment: Creates a promotion negative credit adjustment on the order

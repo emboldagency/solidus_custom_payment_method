@@ -1,1 +1,10 @@
-THIS WILL BE APPLIED TO ALL CUSTOM PAYMENT METHODS IF ENABLED.
+<div class="row">
+  <div class="col-12">
+    <div class="field products_rule_products">
+      <% applied_payment = @promotion.rules.where(type: "Spree::Promotion::Rules::CustomCashPaymentMethodRule").map(&:payment_methods).flatten.map(&:name).to_sentence%>
+      <%= "Currently registered payment methods are: #{applied_payment}" if applied_payment.present? %>
+      <%= label_tag "#{param_prefix}_custom_cash_payment_method_id", I18n.t('spree.product_rule.choose_custom_cash_payment') %>
+      <%= select_tag "#{param_prefix}[payment_method_ids_string]", options_for_select(Spree::PaymentMethod.where(type: "Spree::PaymentMethod::CustomCashMethod").map{|s| [I18n.t("spree.product_rule.match_custom_cash_method", payment_method_name: s.name), s.id] },  promotion_rule.preferred_match_policy), { class: "custom-select", include_blank: true } %>
+    </div>
+  </div>
+</div>

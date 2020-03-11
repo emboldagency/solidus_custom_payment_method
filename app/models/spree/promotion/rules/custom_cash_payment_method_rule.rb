@@ -3,9 +3,8 @@ module Spree
     module Rules
       class CustomCashPaymentMethodRule < Spree::PromotionRule
         MATCH_POLICIES = %w(all)
-        has_many :product_promotion_rules, dependent: :destroy, foreign_key: :promotion_rule_id,
-                                           class_name: 'Spree::ProductPromotionRule'
-        has_many :products, class_name: 'Spree::Product', through: :product_promotion_rules
+        has_many :payment_promotion_rules, dependent: :destroy, foreign_key: :promotion_rule_id, class_name: "Spree::PaymentPromotionRule"
+        has_many :payment_methods, class_name: "Spree::PaymentMethod::CustomCashMethod", through: :payment_promotion_rules
 
         validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES
         preference :match_policy, :string, default: MATCH_POLICIES.first
@@ -16,6 +15,7 @@ module Spree
 
         def eligible?(order, _options = {})
           eligibility_errors = []
+          eligibility_errors << "No registered payment methods" if payment_methods.blank?
 
           case preferred_match_policy
           when 'all'
@@ -23,7 +23,8 @@ module Spree
             if last_payment.blank?
               eligibility_errors << "No payments yet."
             else
-              eligibility_errors << "Not custom cash method payment" if (last_payment.try(:payment_method).try(:type) != "Spree::PaymentMethod::CustomCashMethod")
+              last_payment_payment_method_type = last_payment.try(:payment_method).try(:type)
+              eligibility_errors << "Payment method #{last_payment_payment_method_type} is not supported" if !payment_methods.any? { |payment_method| payment_method.type == last_payment_payment_method_type}
             end
           else
             raise "unexpected match policy: #{preferred_match_policy.inspect}"
@@ -35,6 +36,10 @@ module Spree
         def actionable?(line_item)
           # ONLY WHOLE ORDER ADJUSTMENT
           return false
+        end
+
+        def payment_method_ids_string=(payment_method_ids)
+          self.payment_method_ids = payment_method_ids.to_s.split(',').map(&:strip)
         end
       end
     end

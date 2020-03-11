@@ -21,5 +21,6 @@ if ENV['DB'] == 'mysql'
 else
   gem 'pg', '~> 0.21'
 end
+
 gem 'rails', '< 6'
 gemspec
