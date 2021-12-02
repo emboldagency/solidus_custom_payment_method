@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SolidusCustomPayments::AdjustmentDecorator
+module Spree::AdjustmentDecorator
   def self.prepended(base)
     base.scope :not_forced, -> { !eligibility_forced? }
   end

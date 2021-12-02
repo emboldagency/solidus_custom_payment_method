@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SolidusCustomPayments::PaymentDecorator
+module Spree::PaymentDecorator
   def self.prepended(base)
     base.after_create :set_correct_amount
   end
