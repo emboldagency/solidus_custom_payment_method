@@ -1,4 +1,4 @@
-class CreateSpreePaymentPromotionRules < ActiveRecord::Migration[5.2]
+class CreateSpreePaymentPromotionRules < ActiveRecord::Migration[6.1]
   def change
     create_table :spree_payment_promotion_rules do |t|
       t.integer :payment_method_id
