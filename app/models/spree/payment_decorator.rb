@@ -1,5 +1,10 @@
-Spree::Payment.class_eval do
-  after_create :set_correct_amount
+# frozen_string_literal: true
+
+module SolidusCustomPayments::PaymentDecorator
+  def self.prepended(base)
+    base.after_create :set_correct_amount
+  end
+
   private
 
   def set_correct_amount
@@ -8,4 +13,6 @@ Spree::Payment.class_eval do
     self.amount = self.order.total
     self.save(validate: false)
   end
+
+  ::Spree::Payment.prepend self
 end

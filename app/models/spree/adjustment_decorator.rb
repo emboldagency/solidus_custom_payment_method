@@ -1,5 +1,9 @@
-Spree::Adjustment.class_eval do
-  scope :not_forced, -> { !eligibility_forced? }
+# frozen_string_literal: true
+
+module SolidusCustomPayments::AdjustmentDecorator
+  def self.prepended(base)
+    base.scope :not_forced, -> { !eligibility_forced? }
+  end
 
   def custom_eligibilty_check_for_promotion
     if eligibility_forced?
@@ -89,4 +93,6 @@ Spree::Adjustment.class_eval do
     end
     amount
   end
+
+  ::Spree::Adjustment.prepend self
 end
