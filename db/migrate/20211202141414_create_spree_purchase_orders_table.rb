@@ -1,4 +1,4 @@
-class CreatePurchaseOrdersTable < ActiveRecord::Migration[6.1]
+class CreateSpreePurchaseOrdersTable < ActiveRecord::Migration[6.1]
   def change
     create_table :spree_purchase_orders, force: :cascade do |t|
       t.string "po_num"
