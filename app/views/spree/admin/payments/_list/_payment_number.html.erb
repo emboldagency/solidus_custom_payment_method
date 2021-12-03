@@ -1,0 +1,5 @@
+<% if payment.source_type == 'Spree::PurchaseOrder' %>
+<%= payment.number %>
+<% else %>
+<%= link_to payment.number, spree.admin_order_payment_path(@order, payment) %>
+<% end %>

@@ -1,0 +1,5 @@
+<% if payment.source_type == 'Spree::PurchaseOrder' %>
+<%= payment.payment_method.name %> (<%= payment.source.po_num %>)
+<% else %>
+<%= payment.payment_method.name %>
+<% end %>
