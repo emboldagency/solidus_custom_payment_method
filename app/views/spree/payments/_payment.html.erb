@@ -14,8 +14,8 @@
   <%= content_tag(:span, payment.payment_method.name) %>:
   <%= content_tag(:span, payment.display_amount) %>
 <% elsif source.is_a?(Spree::PurchaseOrder) %>
-  <%= content_tag(:span, payment.payment_method.name) %>:
-  <%= content_tag(:span, payment.source.po_num) %>
+  <%= content_tag(:span, source.payment_method.name) %>:
+  <%= content_tag(:span, source.po_num) %>
 <% else %>
   <%= content_tag(:span, payment.payment_method.name) %>
 <% end %>
