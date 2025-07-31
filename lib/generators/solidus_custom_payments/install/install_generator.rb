@@ -24,7 +24,7 @@ module SolidusCustomPayments
                 if run_migrations
                     run("bundle exec rake db:migrate")
                 else
-                    puts "Skipping rake db:migrate, don't forget to run it!"
+                    Rails.logger.debug("Skipping rake db:migrate, don't forget to run it!")
                 end
             end
         end
