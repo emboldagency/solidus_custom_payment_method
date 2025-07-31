@@ -1,5 +1,7 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe Spree::PaymentPromotionRule, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+require "rails_helper"
+
+RSpec.describe(Spree::PaymentPromotionRule, type: :model) do
+    pending "add some examples to (or delete) #{__FILE__}"
 end
