@@ -16,7 +16,16 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", 'LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir['spec/**/*']
 
-  s.add_dependency 'solidus_core' # Set Solidus version
+  branch = ENV.fetch('SOLIDUS_BRANCH', 'main')
+  s.add_dependency 'solidus_core', '>= 2.5', '< 5.0'
+  s.add_dependency 'solidus', github: 'solidusio/solidus', branch: branch
+  s.add_dependency 'solidus_auth_devise', '>= 2.0'
+  s.add_dependency 'rails', '>= 6.0', '< 9.0'
+  if branch < 'v2.5'
+    s.add_development_dependency 'factory_bot', '4.10.0'
+  else
+    s.add_development_dependency 'factory_bot', '> 4.10.0'
+  end
 
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'ffaker'

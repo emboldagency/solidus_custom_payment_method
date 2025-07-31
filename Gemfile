@@ -1,35 +1,14 @@
-source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-
-branch = ENV.fetch('SOLIDUS_BRANCH', 'main')
-gem 'solidus', github: 'solidusio/solidus', branch: branch
-
-# Provides basic authentication functionality for testing parts of your engine
-gem 'solidus_auth_devise'
-
-# This is needed to avoid incompatibilities between this extension and
-# old versions of solidus (< 2.5). This can be reverted when Solidus 2.4
-# reaches EOL. See https://github.com/solidusio/solidus/pull/2835
-if branch < 'v2.5'
-  gem 'factory_bot', '4.10.0'
-else
-  gem 'factory_bot', '> 4.10.0'
-end
-
-if ENV['DB'] == 'mysql'
-  gem 'mysql2', '~> 0.4.10'
-else
-  gem 'pg', '~> 0.21'
-end
-
-gem 'observer'
-
-gem 'rails', '< 6'
-
 group :development, :test do
-  source "https://rubygems.pkg.github.com/emboldagency" do
-    gem 'embold_ruby_style'
+  gem 'embold_ruby_style', github: 'emboldagency/embold_ruby_style', branch: 'main'
+  # gem 'observer'
+  # Use the appropriate database adapter for your environment (for dummy app)
+  if ENV['DB'] == 'mysql'
+    gem 'mysql2', '~> 0.4.10'
+  else
+    gem 'pg', '~> 0.21'
   end
 end
 
-gemspec
+ruby '~> 3.0'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
