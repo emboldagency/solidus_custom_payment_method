@@ -3,8 +3,10 @@
 module CustomCashMethod
     module Spree
         module PaymentDecorator
-            def self.prepended(base)
-                base.after_create(:set_correct_amount)
+            class << self
+                def prepended(base)
+                    base.after_create(:set_correct_amount)
+                end
             end
 
             private

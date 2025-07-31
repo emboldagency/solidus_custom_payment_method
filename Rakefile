@@ -18,6 +18,7 @@ rescue LoadError
     # no rspec available
 end
 
+desc "Run initial setup tasks"
 task first_run: :environment do
     if Dir["spec/dummy"].empty?
         Rake::Task[:test_app].invoke

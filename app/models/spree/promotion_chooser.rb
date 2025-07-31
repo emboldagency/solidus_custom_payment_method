@@ -13,10 +13,10 @@ module Spree
         def update
             if best_promotion_adjustment
                 @adjustments.select(&:eligible?).each do |adjustment|
-                    adjustment.update_columns(eligible: true, updated_at: Time.current) && next if adjustment.eligibility_forced?
+                    adjustment.update(eligible: true, updated_at: Time.current) && next if adjustment.eligibility_forced?
                     next if adjustment == best_promotion_adjustment
 
-                    adjustment.update_columns(eligible: false, updated_at: Time.current)
+                    adjustment.update(eligible: false, updated_at: Time.current)
                 end
                 best_promotion_adjustment.amount
             else

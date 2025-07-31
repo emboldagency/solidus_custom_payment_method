@@ -5,8 +5,8 @@ module Spree
         module Rules
             class CustomCashPaymentMethodRule < Spree::PromotionRule
                 MATCH_POLICIES = ["all"]
-                has_many :payment_promotion_rules, dependent: :destroy, foreign_key: :promotion_rule_id, class_name: "Spree::PaymentPromotionRule"
-                has_many :payment_methods, class_name: "Spree::PaymentMethod::CustomCashMethod", through: :payment_promotion_rules
+                has_many :payment_promotion_rules, dependent: :destroy, foreign_key: :promotion_rule_id, class_name: "Spree::PaymentPromotionRule", inverse_of: :promotion_rule
+                has_many :payment_methods, class_name: "Spree::PaymentMethod::CustomCashMethod", through: :payment_promotion_rules, inverse_of: :payment_promotion_rules
 
                 validates :preferred_match_policy, inclusion: { in: MATCH_POLICIES }
                 preference :match_policy, :string, default: MATCH_POLICIES.first

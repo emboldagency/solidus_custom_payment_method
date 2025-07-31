@@ -3,8 +3,10 @@
 module CustomCashMethod
     module Spree
         module AdjustmentDecorator
-            def self.prepended(base)
-                base.scope(:not_forced, -> { !eligibility_forced? })
+            class << self
+                def prepended(base)
+                    base.scope(:not_forced, -> { !eligibility_forced? })
+                end
             end
 
             def custom_eligibilty_check_for_promotion
@@ -88,9 +90,8 @@ module CustomCashMethod
                     end
 
                     # Persist only if changed
-                    # This is only not a save! to avoid the extra queries to load the order
-                    # (for validations) and to touch the adjustment.
-                    update_columns(eligible: eligible, amount: amount, updated_at: Time.current) if changed?
+                    # Use update to ensure validations and callbacks are run
+                    update(eligible: eligible, amount: amount, updated_at: Time.current) if changed?
                 end
                 amount
             end
