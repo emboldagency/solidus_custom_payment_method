@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
+branch = ENV.fetch('SOLIDUS_BRANCH', 'main')
 gem 'solidus', github: 'solidusio/solidus', branch: branch
 
 # Provides basic authentication functionality for testing parts of your engine
@@ -22,5 +22,14 @@ else
   gem 'pg', '~> 0.21'
 end
 
+gem 'observer'
+
 gem 'rails', '< 6'
+
+group :development, :test do
+  source "https://rubygems.pkg.github.com/emboldagency" do
+    gem 'embold_ruby_style'
+  end
+end
+
 gemspec
