@@ -1,10 +1,11 @@
-name: Build and Release Gem
+name: CI
 
 on:
-  release:
-    types: [published]
+  push:
+    branches: [ master ]
+  pull_request:
   workflow_dispatch:
 
 jobs:
-  build-and-publish:
-    uses: emboldagency/.github/.github/workflows/ruby-gem-release.yml@master
+  test:
+    uses: emboldagency/.github/.github/workflows/ruby-gem-ci.yml@master
