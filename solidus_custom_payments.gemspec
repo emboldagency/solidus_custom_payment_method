@@ -1,41 +1,44 @@
-# encoding: utf-8
 # frozen_string_literal: true
 
-$LOAD_PATH.push(File.expand_path("../lib", __FILE__))
-require "solidus_custom_payments/version"
+require_relative "lib/solidus_custom_payments/version"
 
-Gem::Specification.new do |s|
-    s.name = "solidus_custom_payments"
-    s.version     = SolidusCustomPayments::VERSION
-    s.summary     = "Configure custom payment methods."
-    s.description = "Configure custom payment methods."
-    s.license     = "BSD-3-Clause"
+Gem::Specification.new do |spec|
+    spec.name = "solidus_custom_payments"
+    spec.version       = SolidusCustomPayments::VERSION
+    spec.authors       = ["Islam Odeh"]
+    spec.email         = ["islamodeh@hotmail.com"]
+    spec.summary       = "Configure custom payment methods."
+    spec.description   = "Configure custom payment methods."
+    spec.homepage      = "https://github.com/islamodeh"
+    spec.license       = "BSD-3-Clause"
 
-    s.author    = "Islam Odeh"
-    s.email     = "islamodeh@hotmail.com"
-    s.homepage  = "https://github.com/islamodeh"
+    spec.metadata["homepage_uri"]    = spec.homepage
+    spec.metadata["source_code_uri"] = spec.homepage
+    spec.metadata["changelog_uri"]   = "https://github.com/islamodeh/solidus_custom_payment_method/commits/master"
 
-    s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
+    spec.required_ruby_version = Gem::Requirement.new(">= 2.7", "< 4.0.0")
 
-    branch = ENV.fetch("SOLIDUS_BRANCH", "main")
-    s.add_dependency("rails", ">= 6.0", "< 9.0")
-    s.add_dependency("solidus", github: "solidusio/solidus", branch: branch)
-    s.add_dependency("solidus_auth_devise", ">= 2.0")
-    s.add_dependency("solidus_core", ">= 2.5", "< 5.0")
-    if branch < "v2.5"
-        s.add_development_dependency("factory_bot", "4.10.0")
-    else
-        s.add_development_dependency("factory_bot", "> 4.10.0")
-    end
+    files = Dir.chdir(__dir__) { %x(git ls-files -z).split("\x0") }
+    spec.files         = files.grep_v(%r{^(test|spec|features)/})
+    spec.bindir        = "exe"
+    spec.executables   = files.grep(%r{^exe/}) { |f| File.basename(f) }
+    spec.require_paths = ["lib"]
 
-    s.add_development_dependency("capybara")
-    s.add_development_dependency("coffee-rails")
-    s.add_development_dependency("database_cleaner")
-    s.add_development_dependency("ffaker")
-    s.add_development_dependency("gem-release")
-    s.add_development_dependency("poltergeist")
-    s.add_development_dependency("rake")
-    s.add_development_dependency("rspec-rails")
-    s.add_development_dependency("sass-rails")
-    s.add_development_dependency("simplecov")
+    # Runtime dependencies
+    spec.add_dependency("rails", ">= 6.0", "< 9.0")
+    spec.add_dependency("solidus_auth_devise", ">= 2.0")
+    spec.add_dependency("solidus_core", [">= 2.5", "< 5.0"])
+
+    spec.add_development_dependency("capybara")
+    spec.add_development_dependency("database_cleaner")
+    spec.add_development_dependency("factory_bot")
+    spec.add_development_dependency("ffaker")
+    spec.add_development_dependency("gem-release")
+    spec.add_development_dependency("poltergeist")
+    spec.add_development_dependency("rake")
+    spec.add_development_dependency("rspec-rails")
+    spec.add_development_dependency("simplecov")
+    spec.add_development_dependency("solidus_dev_support")
+    # spec.add_development_dependency "coffee-rails" # Only if you have CoffeeScript assets
+    # spec.add_development_dependency "sass-rails" # Only if you have Sass assets
 end
