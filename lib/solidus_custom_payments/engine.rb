@@ -19,15 +19,15 @@ module SolidusCustomPayments
             end
 
             initializer "spree.payment_method.add_custom_cash_payment_method", after: "spree.register.payment_methods" do |app|
-                app.config.spree.payment_methods << Spree::PaymentMethod::CustomCashMethod
+              app.config.spree.payment_methods << "Spree::PaymentMethod::CustomCashMethod"
             end
 
             initializer "spree.promotion.rules.add_custom_cash_rule_promotion", after: "spree.promo.register.promotion.rules" do |app|
-                app.config.spree.promotions.rules << Spree::Promotion::Rules::CustomCashPaymentMethodRule
+                app.config.spree.promotions.rules << "Spree::Promotion::Rules::CustomCashPaymentMethodRule"
             end
 
             initializer "spree.promotion.rules.add_custom_cash_promotion_actions", after: "spree.promo.register.promotions.actions" do |app|
-                app.config.spree.promotions.actions << Spree::Promotion::Actions::CreateNegativeAdjustment
+                app.config.spree.promotions.actions << "Spree::Promotion::Actions::CreateNegativeAdjustment"
             end
 
             config.to_prepare(&method(:activate).to_proc)
