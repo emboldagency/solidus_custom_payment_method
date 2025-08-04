@@ -2,7 +2,8 @@
 
 group :development, :test do
     gem "embold_ruby_style", github: "emboldagency/embold_ruby_style", branch: "main"
-    # gem 'observer'
+    gem "observer"
+    gem "rake"
     # Use the appropriate database adapter for your environment (for dummy app)
     if ENV["DB"] == "mysql"
         gem "mysql2", "~> 0.4.10"
